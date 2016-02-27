@@ -1,8 +1,21 @@
+
+// Polyfill for IE
+if (!String.prototype.repeat)
+{
+	String.prototype.repeat = function(count)
+	{
+		'use strict';
+		
+		return Array(count + 1).join(this);
+	};
+}
+
 ;(function($, undefined)
 {
-	"use strict";
+	'use strict';
 	
-	var i, Colour, MotdGenerator;
+	var i, Colour, MotdGenerator,
+		droppedFiles = [];
 	
 	Colour = function()
 	{
@@ -265,7 +278,7 @@
 			$('#results').addClass('hidden');
 			e.preventDefault();
 			
-			files = $('#file')[0].files;
+			files = droppedFiles.length ? droppedFiles : $('#file')[0].files;
 			
 			$('#file').closest('.form-group').toggleClass('has-error', !files.length);
 			
@@ -283,6 +296,67 @@
 			};
 			
 			reader.readAsDataURL(files[0]);
+		});
+	});
+	
+	$(function()
+	{
+		var timeout,
+			input = $('file');
+		
+		if (!window.File || !window.FileList || !window.FileReader || !new XMLHttpRequest().upload) 
+			return;
+		
+		$('body').on('click', '#clear-dropped', function(e)
+		{
+			e.preventDefault();
+			
+			$(document).trigger('drop', e)
+		});
+		
+		$(document).on('dragenter dragover', function(e)
+		{
+			e.preventDefault();
+			
+			clearTimeout(timeout);
+			
+			$('body').addClass('drag-over');
+		}).on('dragleave dragexit', function(e)
+		{
+			e.preventDefault();
+			
+			clearTimeout(timeout);
+			
+			timeout = setTimeout(function()
+			{
+				$('body').removeClass('drag-over');
+			}, 0);
+		}).on('drop', function(e)
+		{
+			droppedFiles = [];
+			
+			if (e.originalEvent)
+			{
+				if (e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.files)
+					droppedFiles = e.originalEvent.dataTransfer.files;
+				else if (e.originalEvent.target && e.originalEvent.target.files)
+					droppedFiles = e.originalEvent.target.files;
+			}
+			
+			e.stopPropagation();
+			e.preventDefault();
+			
+			$(this).trigger('dragleave', e);
+			
+			if (droppedFiles.length)
+			{
+				$('body').addClass('dropped-files');
+				$('#dropped-file-name').text(droppedFiles[0].name);
+			}
+			else
+			{
+				$('body').removeClass('dropped-files');
+			}
 		});
 	});
 })(jQuery);

@@ -52,3 +52,51 @@ textarea
 {
 	display: block;
 }
+
+#drop-target
+{
+	display: none;
+	position: fixed;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.9);
+	padding: 20px;
+}
+
+.drag-over #drop-target
+{
+	display: block;
+}
+
+#drop-target-inner
+{
+	border: 6px dashed #dddddd;
+	width: 100%;
+	height: 100%;
+	border-radius: 6px;
+	display: flex;
+}
+
+#drop-target p
+{
+	display: inline-block;
+	margin: auto;
+}
+
+#dropped-file-info
+{
+	display: none;
+}
+
+.dropped-files #dropped-file-info
+{
+	display: block;
+}
+
+.dropped-files #file-group
+{
+	display: none;
+}
