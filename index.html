@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>MOTD - Image to message of the day</title>
+		<script type="text/javascript" src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+		<script type="text/javascript" async="async" defer="defer" src="script.js"></script>
+		<link type="text/css" rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<h1>MOTD Generator</h1>
+		<p>Message of the day generator. Convert an image to an SSH MOTD banner.</p>
+		<p>Instructions:<p>
+		<ol>
+			<li>Drag-drop or upload an image file &amp; hit Go</li>
+			<li>Copy the result into a text file on your server</li>
+			<li>To preview, run <code>echo -e "`cat <b>motd.txt</b>`"</code></li>
+			<li>To install, run <code>echo -e "`cat <b>motd.txt</b>`" > /etc/motd</code></li>
+		</ol>
+		<form id="form">
+			<label>
+				Upload image
+				<input type="file" id="file">
+			</label>
+			<label>
+				Banner width
+				<input type="number" value="80" id="output-width">
+				characters
+			</label>
+			<input type="submit" value="Go">
+		</form>
+	</body>
+</html>
