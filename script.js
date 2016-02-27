@@ -254,22 +254,31 @@
 	
 	$(function()
 	{
+		new Clipboard('#result-code .btn');
+		
 		$('#form').on('submit', function(e)
 		{
 			var files,
 				reader = new FileReader(),
 				motdGenerator = new MotdGenerator();
 			
+			$('#results').addClass('hidden');
 			e.preventDefault();
 			
 			files = $('#file')[0].files;
+			
+			$('#file').closest('.form-group').toggleClass('has-error', !files.length);
+			
+			if (!files.length)
+				return;
 			
 			reader.onload = function(e)
 			{
 				$.when(motdGenerator.run($('#output-width').val(), e.target.result)).then(function()
 				{
-					$('<pre>').html(motdGenerator.getHtml()).appendTo('body');
-					$('<textarea>').val(motdGenerator.getCode()).appendTo('body');
+					$('#result-preview pre').html(motdGenerator.getHtml());
+					$('#result-code textarea').val(motdGenerator.getCode());
+					$('#results').removeClass('hidden');
 				});
 			};
 			

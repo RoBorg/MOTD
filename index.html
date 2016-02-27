@@ -1,32 +1,59 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>MOTD - Image to message of the day</title>
-		<script type="text/javascript" src="//code.jquery.com/jquery-2.2.1.min.js"></script>
-		<script type="text/javascript" async="async" defer="defer" src="script.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.8/clipboard.min.js"></script>
+		<script type="text/javascript" src="script.js"></script>
+		<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 		<link type="text/css" rel="stylesheet" href="style.css">
 	</head>
 	<body>
-		<h1>MOTD Generator</h1>
-		<p>Message of the day generator. Convert an image to an SSH MOTD banner.</p>
-		<p>Instructions:<p>
-		<ol>
-			<li>Drag-drop or upload an image file &amp; hit Go</li>
-			<li>Copy the result into a text file on your server</li>
-			<li>To preview, run <code>echo -e "`cat <b>motd.txt</b>`"</code></li>
-			<li>To install, run <code>echo -e "`cat <b>motd.txt</b>`" > /etc/motd</code></li>
-		</ol>
-		<form id="form">
-			<label>
-				Upload image
-				<input type="file" id="file">
-			</label>
-			<label>
-				Banner width
-				<input type="number" value="80" id="output-width">
-				characters
-			</label>
-			<input type="submit" value="Go">
-		</form>
+		<div class="container">
+			<h1>MOTD Generator</h1>
+			<p class="lead">Message of the day generator. Convert an image to an SSH MOTD banner.</p>
+			<div class="row">
+				<div class="col-xs-12 col-md-6">
+					<ol>
+						<li>Drag-drop or upload an image file &amp; hit <b>Go</b></li>
+						<li>Copy the result into a text file on your server, for example <i>motd.txt</i></li>
+						<li>To preview, run <code>echo -e "`cat <i>motd.txt</i>`"</code></li>
+						<li>To install, run <code>echo -e "`cat <i>motd.txt</i>`" > /etc/motd</code></li>
+					</ol>
+				</div>
+				<form id="form" class="col-xs-12 col-md-6">
+					<div class="form-group">
+						<label class="control-label" for="#file">Upload image</label>
+						<input type="file" class="form-control" id="file">
+						<div class="help-block error-message">Required</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label">Banner width (characters)</label>
+						<input type="number" value="80" min="10" max="500" class="form-control" id="output-width">
+					</div>
+					<input type="submit" value="Go" class="btn btn-primary">
+				</form>
+			</div>
+			<div class="row hidden" id="results">
+				<div class="col-xs-12 col-md-8" id="result-preview">
+					<pre></pre>
+				</div>
+				<div class="col-xs-12 col-md-4" id="result-code">
+					<textarea readonly="readonly"></textarea>
+					<button class="btn btn-primary" data-clipboard-target="#result-code textarea">Copy to clipboard</button>
+				</div>
+			</div>
+		</div>
+		<footer class="footer">
+			<div class="container">
+				<p class="text-muted">
+					By <a href="http://www.roborg.co.uk">RoBorg</a>, 2016.
+					Contact me via <a href="https://twitter.com/RoBorg">Twitter</a>.
+					Find the source code on <a href="https://github.com/RoBorg/MOTD">GitHub</a>.
+				</p>
+			</div>
+		</footer>
 	</body>
 </html>
