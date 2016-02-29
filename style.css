@@ -32,6 +32,7 @@ pre
 	word-wrap: normal;
 	line-height: normal;
 	background-color: #000000;
+	font-family: Consolas, "Courier New", monospace;
 }
 
 textarea
